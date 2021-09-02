@@ -7,8 +7,11 @@ namespace SnakeGame
     {
         private static Random random = new Random();
 
-        //public delegate void KeyboardButton(ConsoleKey key);
-        public event EventHandler KeyboardButtonPressed;
+        public delegate void KeyboardButton(ConsoleKey key);
+
+        //public event EventHandler KeyboardButtonPressed;
+
+        private Direction direction;
 
         //private Queue<Point> snake = new Queue<Point>();
         private List<Point> snake = new List<Point>();
@@ -23,6 +26,7 @@ namespace SnakeGame
         {
             //snake.Enqueue(new Point(x, y));
             //snake.Peek().PrintPoint();
+            direction = Direction.RIGHT;
             _head = new Point(x, y);
             _tail = new Point(x, y);
             _tailOld = new Point(0, 0);
@@ -35,8 +39,26 @@ namespace SnakeGame
             Console.Write(_symbol);
         }
 
-        public void MoveSnake()
+        public void MoveSnake(Food food)
         {
+            switch (direction)
+            {
+                case Direction.LEFT:
+                    MoveLeft(food);
+                    break;
+
+                case Direction.RIGHT:
+                    MoveRight(food);
+                    break;
+
+                case Direction.UP:
+                    MoveUp(food);
+                    break;
+
+                case Direction.DOWN:
+                    MoveDown(food);
+                    break;
+            }
         }
 
         public void PrintSnakeHead(int tailX, int tailY) //Сделать метод универсальным
@@ -50,8 +72,8 @@ namespace SnakeGame
         public void LengthIncrease(ref Food food)
         {
             snake.Insert(0, new Point(food.X, food.Y));
-            food.X = food.X + 0;
-            food.Y = food.Y - 5;
+            food.X = food.X + 5;
+            food.Y = food.Y + 0;
             food.PrintPoint();
             _head = snake[0];
             _tail = snake[snake.Count - 1];

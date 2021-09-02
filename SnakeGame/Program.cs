@@ -11,8 +11,8 @@ namespace SnakeGame
         private static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            Snake snake = new Snake(5, 50);
-            Food food = new Food(5, 45);
+            Snake snake = new Snake(5, 5);
+            Food food = new Food(10, 5);
             //Food food = new Food(5, 10);
             //new Food(50, 10).PrintPoint();
             //snake.LengthIncrease(11, 10);
@@ -20,15 +20,21 @@ namespace SnakeGame
             //snake.LengthIncrease(13, 10);
             food.PrintPoint();
             snake.PrintPoint();
+            //snake.KeyboardButtonPressed += Move;
             int i = 0;
             do
             {
                 //snake.MoveDown(food);
                 //Thread.Sleep(100);
-                snake.MoveUp(food);
+                snake.MoveRight(food);
                 Thread.Sleep(100);
                 i++;
             } while (true);
+        }
+
+        public void Move(Snake snake, Food food)
+        {
+            snake.MoveSnake(food);
         }
     }
 }
