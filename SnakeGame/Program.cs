@@ -6,35 +6,59 @@ using System.Linq;
 
 namespace SnakeGame
 {
-    internal class Program
+    public class Program
     {
+        public class SnakeEventArgs
+        {
+            public Food Food { get; set; }
+
+            public ConsoleKey KeyPressed { get; set; }
+
+            public SnakeEventArgs(Food food, ConsoleKey keyPressed)
+            {
+                Food = food;
+                KeyPressed = keyPressed;
+            }
+        }
+
+        public delegate void KeyboardButton(object sender, EventArgs e);
+
+        public static event KeyboardButton OnKeyPressed;
+
+        private static Snake _snake;
+
         private static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            Snake snake = new Snake(5, 5);
             Food food = new Food(10, 5);
             //Food food = new Food(5, 10);
-            //new Food(50, 10).PrintPoint();
-            //snake.LengthIncrease(11, 10);
-            //snake.LengthIncrease(12, 10);
-            //snake.LengthIncrease(13, 10);
+
+            _snake = new Snake(5, 5, food);
             food.PrintPoint();
-            snake.PrintPoint();
-            //snake.KeyboardButtonPressed += Move;
+            _snake.PrintPoint();
+            OnKeyPressed += (o, e) =>
+            { //определить какая клавиша была нажата и передать в метод _snake.ChangeDirection()
+                ConsoleKey keyPressed;
+                switch (Console)
+                {
+                    default:
+                        break;
+                }
+
+                var test = Console.ReadKey(true).Key;
+            };
             int i = 0;
             do
             {
-                //snake.MoveDown(food);
-                //Thread.Sleep(100);
-                snake.MoveRight(food);
+                _snake.MoveSnake();
                 Thread.Sleep(100);
                 i++;
             } while (true);
         }
 
-        public void Move(Snake snake, Food food)
+        public static void Move(object sender, EventArgs e)
         {
-            snake.MoveSnake(food);
+            _snake.MoveSnake();
         }
     }
 }
