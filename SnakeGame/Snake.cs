@@ -47,6 +47,17 @@ namespace SnakeGame
             Console.Write(' ');
         }
 
+        public void LengthIncrease(ref Food food)
+        {
+            snake.Insert(0, new Point(food.X, food.Y));
+            food.X = food.X + 0;
+            food.Y = food.Y - 5;
+            food.PrintPoint();
+            _head = snake[0];
+            _tail = snake[snake.Count - 1];
+            PrintSnakeHead(_tailOld.X, _tailOld.Y);
+        }
+
         public void MoveRight(Food food)
         {
             //var x = this.X = snake.Peek().X += 1;
@@ -56,18 +67,22 @@ namespace SnakeGame
             //snake.Enqueue(new Point(x, y));
             if (food.X == _head.X + 1 && food.Y == _head.Y) //Это условие заменить событием
             {
-                this.LengthIncrease(food.X, food.Y);
-                food.X = food.X + 5;
-                food.PrintPoint();
-                _head = snake[0];
-                _tail = snake[snake.Count - 1];
-                PrintSnakeHead(_tailOld.X, _tailOld.Y);
+                LengthIncrease(ref food);
                 return;
             }
 
-            _tailOld = new Point(_tail.X, _tail.Y);
-            for (int i = 0; i < snake.Count; i++)
-                snake[i].X++;
+            _tailOld.X = _tail.X;
+            _tailOld.Y = _tail.Y;
+            var temp = snake[snake.Count - 1];
+            if (snake.Count > 1)
+            {
+                for (int i = snake.Count - 1; i > 0; i--)
+                {
+                    snake[i].X = snake[i - 1].X;
+                    snake[i].Y = snake[i - 1].Y;
+                }
+            }
+            snake[0].X++;
 
             _head = snake[0];
             _tail = snake[snake.Count - 1];
@@ -75,13 +90,34 @@ namespace SnakeGame
             PrintSnakeHead(_tailOld.X, _tailOld.Y);
         }
 
-        public void MoveUp()
+        public void MoveUp(Food food)
         {
             //var x = snake.Peek().X;
             //var y = snake.Peek().Y -= 1;
             //PrintSnakeHead();
             //snake.Dequeue();
             //snake.Enqueue(new Point(x, y));
+            if (food.X == _head.X && food.Y == _head.Y - 1) //Это условие заменить событием
+            {
+                this.LengthIncrease(ref food);
+                return;
+            }
+
+            _tailOld.X = _tail.X;
+            _tailOld.Y = _tail.Y;
+            var temp = snake[snake.Count - 1];
+            if (snake.Count > 1)
+            {
+                for (int i = snake.Count - 1; i > 0; i--)
+                {
+                    snake[i].X = snake[i - 1].X;
+                    snake[i].Y = snake[i - 1].Y;
+                }
+            }
+            snake[0].Y--;
+            _head = snake[0];
+            _tail = snake[snake.Count - 1];
+            PrintSnakeHead(_tailOld.X, _tailOld.Y);
         }
 
         public void MoveDown(Food food)
@@ -94,34 +130,58 @@ namespace SnakeGame
 
             if (food.X == _head.X && food.Y == _head.Y + 1) //Это условие заменить событием
             {
-                this.LengthIncrease(food.X, food.Y);
-                food.Y = food.Y + 5;
-                food.PrintPoint();
-                _head = snake[0];
-                _tail = snake[snake.Count - 1];
-                PrintSnakeHead(_tailOld.X, _tailOld.Y);
+                this.LengthIncrease(ref food);
                 return;
             }
-            _tailOld = new Point(_tail.X, _tail.Y);
 
-            for (int i = 0; i < snake.Count; i++)
-                snake[i].Y++;
-
+            _tailOld.X = _tail.X;
+            _tailOld.Y = _tail.Y;
+            var temp = snake[snake.Count - 1];
+            if (snake.Count > 1)
+            {
+                for (int i = snake.Count - 1; i > 0; i--)
+                {
+                    snake[i].X = snake[i - 1].X;
+                    snake[i].Y = snake[i - 1].Y;
+                }
+            }
+            snake[0].Y++;
             _head = snake[0];
             _tail = snake[snake.Count - 1];
             PrintSnakeHead(_tailOld.X, _tailOld.Y);
         }
 
-        public void MoveLeft()
+        public void MoveLeft(Food food)
         {
             //var x = snake.Peek().X -= 1;
             //var y = snake.Peek().Y;
             //PrintSnakeHead();
             //snake.Dequeue();
             //snake.Enqueue(new Point(x, y));
+            if (food.X == _head.X - 1 && food.Y == _head.Y) //Это условие заменить событием
+            {
+                LengthIncrease(ref food);
+                return;
+            }
+
+            _tailOld.X = _tail.X;
+            _tailOld.Y = _tail.Y;
+            if (snake.Count > 1)
+            {
+                for (int i = snake.Count - 1; i > 0; i--)
+                {
+                    snake[i].X = snake[i - 1].X;
+                    snake[i].Y = snake[i - 1].Y;
+                }
+            }
+            snake[0].X--;
+
+            _head = snake[0];
+            _tail = snake[snake.Count - 1];
+
+            PrintSnakeHead(_tailOld.X, _tailOld.Y);
         }
 
         //public void LengthIncrease(int x, int y) => snake.Enqueue(new Point(x, y));
-        public void LengthIncrease(int x, int y) => snake.Insert(0, new Point(x, y));
     }
 }
