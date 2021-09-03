@@ -8,22 +8,9 @@ namespace SnakeGame
 {
     public class Program
     {
-        public class SnakeEventArgs
-        {
-            public Food Food { get; set; }
-
-            public ConsoleKey KeyPressed { get; set; }
-
-            public SnakeEventArgs(Food food, ConsoleKey keyPressed)
-            {
-                Food = food;
-                KeyPressed = keyPressed;
-            }
-        }
-
         public delegate void KeyboardButton(object sender, EventArgs e);
 
-        public static event KeyboardButton OnKeyPressed;
+        //public static event KeyboardButton OnKeyPressed;
 
         private static Snake _snake;
 
@@ -36,17 +23,7 @@ namespace SnakeGame
             _snake = new Snake(5, 5, food);
             food.PrintPoint();
             _snake.PrintPoint();
-            OnKeyPressed += (o, e) =>
-            { //определить какая клавиша была нажата и передать в метод _snake.ChangeDirection()
-                ConsoleKey keyPressed;
-                switch (Console)
-                {
-                    default:
-                        break;
-                }
 
-                var test = Console.ReadKey(true).Key;
-            };
             int i = 0;
             do
             {
@@ -54,11 +31,6 @@ namespace SnakeGame
                 Thread.Sleep(100);
                 i++;
             } while (true);
-        }
-
-        public static void Move(object sender, EventArgs e)
-        {
-            _snake.MoveSnake();
         }
     }
 }

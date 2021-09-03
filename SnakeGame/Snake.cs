@@ -1,13 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SnakeGame
 {
+    //internal class KeyEvent
+    //{
+    //    public event EventHandler<ConsoleKeyPressedEventArgs> KeyPress;
+
+    //    public void OnKeyPress(ConsoleKeyInfo _key)
+    //    {
+    //        KeyPress(this, new ConsoleKeyPressedEventArgs(_key));
+    //    }
+    //}
+
     public class Snake : Point
     {
         private static Random random = new Random();
 
-        //public event EventHandler KeyboardButtonPressed;
+        public delegate void KeyboardButton(object sender, ConsoleKeyPressedEventArgs e);
+
+        public event KeyboardButton OnKeyPressed;
 
         private Direction _direction;
 
@@ -31,15 +44,38 @@ namespace SnakeGame
             _tailOld = new Point(0, 0);
             _food = food;
             snake.Add(_head);
+            OnKeyPressed += (sender, e) =>
+            {
+                ChangeDirection(e.KeyPressed);
+            };
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                    OnKeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(Console.ReadKey(true)));
+            });
         }
 
-        public override void PrintPoint()
+        public void ChangeDirection(ConsoleKeyInfo keyInfo)
         {
-            Console.SetCursorPosition(this.X, this.Y); //финальный вариант
-            Console.Write(_symbol);
-        }
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    _direction = Direction.UP;
+                    break;
 
-        public void ChangeDirection(Direction newDirection) => _direction = newDirection;
+                case ConsoleKey.DownArrow:
+                    _direction = Direction.DOWN;
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    _direction = Direction.RIGHT;
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    _direction = Direction.LEFT;
+                    break;
+            }
+        }
 
         public void MoveSnake()
         {
@@ -60,7 +96,15 @@ namespace SnakeGame
                 case Direction.DOWN:
                     MoveDown();
                     break;
+
+                default: break;
             }
+        }
+
+        public override void PrintPoint()
+        {
+            Console.SetCursorPosition(this.X, this.Y); //финальный вариант
+            Console.Write(_symbol);
         }
 
         public void PrintSnakeHead(int tailX, int tailY) //Сделать метод универсальным
@@ -74,8 +118,8 @@ namespace SnakeGame
         public void LengthIncrease(ref Food food)
         {
             snake.Insert(0, new Point(food.X, food.Y));
-            food.X = food.X + 5;
-            food.Y = food.Y + 0;
+            food.X = random.Next(0, Console.WindowWidth / 2);
+            food.Y = random.Next(0, Console.WindowHeight / 2);
             food.PrintPoint();
             _head = snake[0];
             _tail = snake[snake.Count - 1];
