@@ -34,6 +34,10 @@ namespace SnakeGame
         private Point _tailOld;
         private Food _food;
 
+        private int _score = 0;
+
+        public int Score { get => _score; }
+
         public Snake(int x, int y, Food food) : base(x, y)
         {
             //snake.Enqueue(new Point(x, y));
@@ -51,7 +55,9 @@ namespace SnakeGame
             Task.Factory.StartNew(() =>
             {
                 while (true)
+                {
                     OnKeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(Console.ReadKey(true)));
+                }
             });
         }
 
@@ -79,6 +85,8 @@ namespace SnakeGame
 
         public void MoveSnake()
         {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(_score);
             switch (_direction)
             {
                 case Direction.LEFT:
@@ -109,14 +117,24 @@ namespace SnakeGame
 
         public void PrintSnakeHead(int tailX, int tailY) //Сделать метод универсальным
         {
-            Console.SetCursorPosition(_head.X, _head.Y);
-            Console.Write(_symbol);
-            Console.SetCursorPosition(tailX, tailY);
-            Console.Write(' ');
+            try
+            {
+                Console.SetCursorPosition(_head.X, _head.Y);
+                Console.Write(_symbol);
+                Console.SetCursorPosition(tailX, tailY);
+                Console.Write(' ');
+            }
+            catch (Exception)
+            {
+                Console.Clear();
+                string text = "GAME OVER!";
+                Console.WriteLine(text);
+            }
         }
 
         public void LengthIncrease(ref Food food)
         {
+            _score++;
             snake.Insert(0, new Point(food.X, food.Y));
             food.X = random.Next(0, Console.WindowWidth / 2);
             food.Y = random.Next(0, Console.WindowHeight / 2);

@@ -3,34 +3,42 @@ using System.Windows.Input;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SnakeGame
 {
     public class Program
     {
-        public delegate void KeyboardButton(object sender, EventArgs e);
-
-        //public static event KeyboardButton OnKeyPressed;
-
-        private static Snake _snake;
+        private static Random random = new Random();
 
         private static void Main(string[] args)
         {
-            Console.CursorVisible = false;
-            Food food = new Food(10, 5);
-            //Food food = new Food(5, 10);
+            Preview();
+            Console.ReadLine();
 
-            _snake = new Snake(5, 5, food);
-            food.PrintPoint();
-            _snake.PrintPoint();
+            new Game().Start();
+            Ending();
+        }
 
-            int i = 0;
-            do
+        private static void Preview() => Message("Press any key to start the game...", ConsoleColor.Red);
+
+        private static void Ending()
+        {
+            Console.Clear();
+            while (true)
             {
-                _snake.MoveSnake();
-                Thread.Sleep(100);
-                i++;
-            } while (true);
+                var color = (ConsoleColor)random.Next(0, 16);
+                Message("Congratulations !!!", color);
+                Thread.Sleep(50);
+            }
+        }
+
+        private static void Message(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, (Console.WindowHeight - 1) / 2);
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

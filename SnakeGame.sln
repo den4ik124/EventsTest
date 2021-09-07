@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnakeGame", "SnakeGame\SnakeGame.csproj", "{F0439446-C9F9-4323-B21A-C8ADB69AE3BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{00630190-62AD-4524-9054-701C6791F1B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsTest", "EventsTest\EventsTest.csproj", "{621CB328-9BF8-4F57-B74F-C288F2F11D1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F0439446-C9F9-4323-B21A-C8ADB69AE3BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0439446-C9F9-4323-B21A-C8ADB69AE3BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0439446-C9F9-4323-B21A-C8ADB69AE3BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00630190-62AD-4524-9054-701C6791F1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00630190-62AD-4524-9054-701C6791F1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00630190-62AD-4524-9054-701C6791F1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00630190-62AD-4524-9054-701C6791F1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{621CB328-9BF8-4F57-B74F-C288F2F11D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{621CB328-9BF8-4F57-B74F-C288F2F11D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{621CB328-9BF8-4F57-B74F-C288F2F11D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{621CB328-9BF8-4F57-B74F-C288F2F11D1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
