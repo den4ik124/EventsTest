@@ -1,5 +1,8 @@
 ﻿namespace SnakeGame
 {
+    /// <summary>
+    /// Базовый класс для создания точки в консоли
+    /// </summary>
     public class Point
     {
         private int _x;

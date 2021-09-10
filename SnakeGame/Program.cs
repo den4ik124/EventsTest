@@ -20,7 +20,7 @@ namespace SnakeGame
             Ending();
         }
 
-        private static void Preview() => Message("Press any key to start the game...", ConsoleColor.Red);
+        private static void Preview() => Message("Press ENTER to start the game...", ConsoleColor.Red);
 
         private static void Ending()
         {

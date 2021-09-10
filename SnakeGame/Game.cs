@@ -16,6 +16,9 @@ namespace SnakeGame
             _snake.PrintPoint();
         }
 
+        /// <summary>
+        /// Начало игры
+        /// </summary>
         public void Start()
         {
             Console.Clear();
